@@ -1,1 +1,583 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="이력서형 포트폴리오 — 소개, 프로젝트, 연락처" />
+  <title>Resume Portfolio</title>
+
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --panel: rgba(255,255,255,.06);
+      --panel-strong: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.14);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+      --pad: 22px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      background:
+        radial-gradient(1000px 700px at 15% -10%, rgba(160,115,255,.25), transparent 60%),
+        radial-gradient(1000px 700px at 90% 0%, rgba(78,210,255,.18), transparent 55%),
+        radial-gradient(1200px 900px at 50% 120%, rgba(255,120,180,.15), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.9}
+
+    /* Sticky Header (GNB) */
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(11,15,23,.65);
+      border-bottom: 1px solid var(--line);
+    }
+    .header__inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px var(--pad);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 160px;
+    }
+    .brand__dot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 0 0 5px rgba(255,255,255,.08);
+    }
+    .brand__name{
+      font-weight: 700;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px var(--pad) 80px;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .hero__grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      padding: 28px;
+      align-items: center;
+    }
+
+    /* Centered image block (reserved space) */
+    .avatarWrap{
+      display:flex;
+      flex-direction: column;
+      align-items: center;   /* 가운데 정렬 */
+      justify-content: center;
+      gap: 14px;
+      padding: 10px 0;
+    }
+    .avatarFrame{
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    }
+    .avatarFrame img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+    }
+    .avatarHint{
+      font-size: 12px;
+      color: var(--muted);
+      text-align:center;
+    }
+
+    .title{
+      font-size: 34px;
+      line-height: 1.2;
+      margin: 0 0 10px;
+      letter-spacing: -0.4px;
+    }
+    .subtitle{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .pillRow{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .pill{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .actions{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn--ghost{
+      background: transparent;
+    }
+
+    /* Sections */
+    section{
+      scroll-margin-top: 92px; /* sticky header 고려 */
+      margin-top: 26px;
+    }
+    .card{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 12px 45px rgba(0,0,0,.22);
+    }
+    .sectionTitle{
+      margin: 0 0 12px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .muted{color: var(--muted)}
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .divider{
+      height: 1px;
+      background: var(--line);
+      margin: 16px 0;
+    }
+
+    /* Timeline */
+    .timeline{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display:flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tItem{
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .tDate{
+      font-weight: 800;
+      color: rgba(255,255,255,.80);
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+    .tTitle{
+      margin: 0;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .tDesc{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Projects */
+    .projects{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .pCard{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding: 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 180px;
+    }
+    .pTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .pTitle{
+      margin: 0;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+    }
+    .tag{
+      font-size: 12px;
+      color: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      background: rgba(255,255,255,.04);
+    }
+    .pDesc{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .pMeta{
+      margin-top: auto;
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip{
+      font-size: 12px;
+      color: rgba(255,255,255,.78);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* Contact */
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .contactItem{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .contactLabel{
+      margin: 0 0 6px;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(255,255,255,.85);
+    }
+    .contactValue{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 26px;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      text-align:center;
+      padding: 18px 0 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero__grid{grid-template-columns: 1fr}
+      .projects{grid-template-columns: 1fr 1fr}
+      .grid2{grid-template-columns: 1fr}
+      .contactGrid{grid-template-columns: 1fr}
+      .tItem{grid-template-columns: 1fr}
+    }
+    @media (max-width: 560px){
+      .title{font-size: 28px}
+      .projects{grid-template-columns: 1fr}
+      .header__inner{padding: 12px var(--pad)}
+      .brand{min-width: auto}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- GNB Header -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="brand">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__name">Your Name</span>
+      </div>
+
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#intro">소개</a>
+        <a href="#projects">프로젝트</a>
+        <a href="#contact">연락처</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <div class="hero" id="top">
+      <div class="hero__grid">
+        <div>
+          <h1 class="title">직무 타이틀 / 한 줄 임팩트</h1>
+          <p class="subtitle">
+            여기에 2~3문장 소개를 넣어줘. (예: 어떤 문제를 해결해왔고, 어떤 강점/성과가 있는지)
+          </p>
+
+          <div class="pillRow" aria-label="핵심 키워드">
+            <span class="pill">Keyword 1</span>
+            <span class="pill">Keyword 2</span>
+            <span class="pill">Keyword 3</span>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="#projects" title="프로젝트로 이동">프로젝트 보기 →</a>
+            <a class="btn btn--ghost" href="#contact" title="연락처로 이동">연락하기</a>
+          </div>
+        </div>
+
+        <!-- 가운데 이미지 영역(자리 고정) -->
+        <div class="avatarWrap" aria-label="프로필 이미지">
+          <div class="avatarFrame">
+            <!-- profile.jpg를 리포지토리에 올리면 자동 반영 -->
+            <img src="profile.jpg" alt="프로필 사진" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;color:rgba(255,255,255,.65);font-weight:800;font-size:13px;text-align:center; padding:16px;&quot;>profile.jpg<br>이미지를 같은 폴더에 업로드</div>';" />
+          </div>
+          <div class="avatarHint">이미지 권장: 정사각형(예: 800×800), 파일명 <b>profile.jpg</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소개 -->
+    <section id="intro">
+      <div class="card">
+        <h2 class="sectionTitle">소개</h2>
+        <div class="grid2">
+          <div>
+            <p class="muted" style="margin-top:0;">
+              이 섹션은 “이력서 요약(Summary)” 느낌으로 작성하면 좋아.
+              <br/>예: 담당해온 영역, 성과 스타일(정량/정성), 일하는 방식.
+            </p>
+
+            <div class="divider"></div>
+
+            <p style="margin:0;">
+              <b>핵심 강점</b><br/>
+              • 강점 1 (예: 매출/전환 개선, 운영 자동화 등)<br/>
+              • 강점 2<br/>
+              • 강점 3
+            </p>
+          </div>
+
+          <div>
+            <p style="margin-top:0;">
+              <b>경력 하이라이트</b>
+            </p>
+            <ul class="timeline" aria-label="경력 타임라인">
+              <li class="tItem">
+                <div class="tDate">2024–2025</div>
+                <div>
+                  <p class="tTitle">회사명 / 직무</p>
+                  <p class="tDesc">성과 한 줄(정량). 예: 월 매출 00% 성장, 프로세스 00% 단축 등.</p>
+                </div>
+              </li>
+              <li class="tItem">
+                <div class="tDate">2022–2024</div>
+                <div>
+                  <p class="tTitle">회사명 / 직무</p>
+                  <p class="tDesc">주요 업무 + 임팩트. 예: 핵심 채널 운영, 캠페인 기획/집행.</p>
+                </div>
+              </li>
+              <li class="tItem">
+                <div class="tDate">2020–2022</div>
+                <div>
+                  <p class="tTitle">회사명 / 직무</p>
+                  <p class="tDesc">어떤 문제를 어떻게 풀었는지(상황-행동-결과)로 1~2문장.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="margin:0;">
+          <b>스킬</b><br/>
+          <span class="muted">예:</span> Excel/Sheets, 데이터 분석, 퍼포먼스 마케팅 협업, 프로젝트 관리, 커뮤니케이션, 툴(노션/슬랙 등)
+        </p>
+      </div>
+    </section>
+
+    <!-- 프로젝트 -->
+    <section id="projects">
+      <div class="card">
+        <h2 class="sectionTitle">프로젝트</h2>
+        <p class="muted" style="margin-top:0;">
+          프로젝트는 “문제 → 내가 한 일 → 결과(수치)” 순서로 쓰면 설득력이 확 올라가.
+        </p>
+
+        <div class="projects" aria-label="프로젝트 목록">
+          <article class="pCard">
+            <div class="pTop">
+              <h3 class="pTitle">프로젝트명 1</h3>
+              <span class="tag">Case Study</span>
+            </div>
+            <p class="pDesc">문제/목표 한 줄. 내가 맡은 역할 한 줄. 결과 한 줄.</p>
+            <div class="pMeta">
+              <span class="chip">성과: +00%</span>
+              <span class="chip">기간: 0주</span>
+              <span class="chip">툴: OO</span>
+            </div>
+          </article>
+
+          <article class="pCard">
+            <div class="pTop">
+              <h3 class="pTitle">프로젝트명 2</h3>
+              <span class="tag">Growth</span>
+            </div>
+            <p class="pDesc">핵심 액션 2~3개를 짧게. (예: 구조 개선, 운영 자동화, 협업 설계)</p>
+            <div class="pMeta">
+              <span class="chip">전환: +00%</span>
+              <span class="chip">매출: 00억</span>
+              <span class="chip">채널: OO</span>
+            </div>
+          </article>
+
+          <article class="pCard">
+            <div class="pTop">
+              <h3 class="pTitle">프로젝트명 3</h3>
+              <span class="tag">Ops</span>
+            </div>
+            <p class="pDesc">임팩트가 큰 한 건을 깊게. “내가 만든 시스템/프로세스” 강조.</p>
+            <div class="pMeta">
+              <span class="chip">리드타임: -00%</span>
+              <span class="chip">에러: -00%</span>
+              <span class="chip">자동화</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 연락처 -->
+    <section id="contact">
+      <div class="card">
+        <h2 class="sectionTitle">연락처</h2>
+        <p class="muted" style="margin-top:0;">아래 항목을 본인 정보로 교체해줘.</p>
+
+        <div class="contactGrid" aria-label="연락처 정보">
+          <div class="contactItem">
+            <p class="contactLabel">이메일</p>
+            <p class="contactValue"><a href="mailto:your@email.com">your@email.com</a></p>
+          </div>
+          <div class="contactItem">
+            <p class="contactLabel">전화</p>
+            <p class="contactValue"><a href="tel:+821012345678">+82 10-1234-5678</a></p>
+          </div>
+          <div class="contactItem">
+            <p class="contactLabel">링크드인</p>
+            <p class="contactValue"><a href="https://www.linkedin.com/in/yourid" target="_blank" rel="noreferrer">linkedin.com/in/yourid</a></p>
+          </div>
+          <div class="contactItem">
+            <p class="contactLabel">깃허브</p>
+            <p class="contactValue"><a href="https://github.com/yourid" target="_blank" rel="noreferrer">github.com/yourid</a></p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="margin:0;" class="muted">
+          TIP: PDF 이력서도 올릴 거면 리포지토리에 <b>resume.pdf</b> 업로드 후
+          <a class="btn" style="padding:8px 10px; border-radius:10px; display:inline-flex; margin-left:6px;" href="resume.pdf" target="_blank" rel="noreferrer">이력서 PDF 열기</a>
+          버튼처럼 연결하면 좋아.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> Your Name · Built on GitHub Pages
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
 
